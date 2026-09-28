@@ -1,0 +1,47 @@
+{
+  "all_detected": true,
+  "checks": [
+    {
+      "detected": true,
+      "mismatches": [
+        {
+          "actual": "alice",
+          "case": "cross_provider_email",
+          "expected": null
+        },
+        {
+          "actual": "alice",
+          "case": "same_provider_other_subject",
+          "expected": null
+        },
+        {
+          "actual": "local-user",
+          "case": "local_only_collision",
+          "expected": null
+        },
+        {
+          "actual": "alice",
+          "case": "subject_case_changed",
+          "expected": null
+        }
+      ],
+      "mutation": "email_fallback_mutant"
+    },
+    {
+      "detected": true,
+      "mismatches": [
+        {
+          "actual": "alice",
+          "case": "same_subject_other_provider",
+          "expected": "bob"
+        },
+        {
+          "actual": "alice",
+          "case": "bound_bob_claims_alice_email",
+          "expected": "bob"
+        }
+      ],
+      "mutation": "provider_omitted_mutant"
+    }
+  ]
+}

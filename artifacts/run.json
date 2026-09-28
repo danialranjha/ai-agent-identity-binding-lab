@@ -1,0 +1,682 @@
+{
+  "all_expected": true,
+  "counts_excluding_assumption_failure": {
+    "bound_identity": {
+      "correct_account_sessions": 8,
+      "in_scope_fixtures": 17,
+      "refused": 9,
+      "wrong_account_sessions": 0
+    },
+    "email_only": {
+      "correct_account_sessions": 4,
+      "in_scope_fixtures": 17,
+      "refused": 6,
+      "wrong_account_sessions": 7
+    }
+  },
+  "fixture_pairs": 18,
+  "rows": [
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-A",
+        "subject": "alice-01"
+      },
+      "case": "ordinary",
+      "expected": "alice",
+      "family": "legitimate",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Ordinary enrolled identity.",
+      "owner": "alice",
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    },
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-A",
+        "subject": "alice-01"
+      },
+      "case": "ordinary",
+      "expected": "alice",
+      "family": "legitimate",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Ordinary enrolled identity.",
+      "owner": "alice",
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    },
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-B",
+        "subject": "unbound"
+      },
+      "case": "cross_provider_email",
+      "expected": "alice",
+      "family": "unlinked",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Different provider and subject claim Alice email.",
+      "owner": null,
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-B",
+        "subject": "unbound"
+      },
+      "case": "cross_provider_email",
+      "expected": null,
+      "family": "unlinked",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Different provider and subject claim Alice email.",
+      "owner": null,
+      "session_capture": []
+    },
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-A",
+        "subject": "attacker-01"
+      },
+      "case": "same_provider_other_subject",
+      "expected": "alice",
+      "family": "unlinked",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Provider membership alone is insufficient.",
+      "owner": null,
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-A",
+        "subject": "attacker-01"
+      },
+      "case": "same_provider_other_subject",
+      "expected": null,
+      "family": "unlinked",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Provider membership alone is insufficient.",
+      "owner": null,
+      "session_capture": []
+    },
+    {
+      "actual": "bob",
+      "assertion": {
+        "email": "bob@example.invalid",
+        "provider": "provider-B",
+        "subject": "shared"
+      },
+      "case": "same_subject_other_provider",
+      "expected": "bob",
+      "family": "legitimate",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "The same subject string exists under A and B with different owners.",
+      "owner": "bob",
+      "session_capture": [
+        {
+          "user_id": "bob"
+        }
+      ]
+    },
+    {
+      "actual": "bob",
+      "assertion": {
+        "email": "bob@example.invalid",
+        "provider": "provider-B",
+        "subject": "shared"
+      },
+      "case": "same_subject_other_provider",
+      "expected": "bob",
+      "family": "legitimate",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "The same subject string exists under A and B with different owners.",
+      "owner": "bob",
+      "session_capture": [
+        {
+          "user_id": "bob"
+        }
+      ]
+    },
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-B",
+        "subject": "shared"
+      },
+      "case": "bound_bob_claims_alice_email",
+      "expected": "alice",
+      "family": "wrong_account",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Binding must select Bob, not simply permit any session.",
+      "owner": "bob",
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    },
+    {
+      "actual": "bob",
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-B",
+        "subject": "shared"
+      },
+      "case": "bound_bob_claims_alice_email",
+      "expected": "bob",
+      "family": "wrong_account",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Binding must select Bob, not simply permit any session.",
+      "owner": "bob",
+      "session_capture": [
+        {
+          "user_id": "bob"
+        }
+      ]
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "new-alice@example.invalid",
+        "provider": "provider-A",
+        "subject": "alice-01"
+      },
+      "case": "email_changed",
+      "expected": null,
+      "family": "legitimate_change",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Stable enrolled identity with a new email.",
+      "owner": "alice",
+      "session_capture": []
+    },
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "new-alice@example.invalid",
+        "provider": "provider-A",
+        "subject": "alice-01"
+      },
+      "case": "email_changed",
+      "expected": "alice",
+      "family": "legitimate_change",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Stable enrolled identity with a new email.",
+      "owner": "alice",
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    },
+    {
+      "actual": "bob",
+      "assertion": {
+        "email": "bob@example.invalid",
+        "provider": "provider-A",
+        "subject": "alice-01"
+      },
+      "case": "email_matches_another_user",
+      "expected": "bob",
+      "family": "wrong_account",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Stable identity must not jump to Bob.",
+      "owner": "alice",
+      "session_capture": [
+        {
+          "user_id": "bob"
+        }
+      ]
+    },
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "bob@example.invalid",
+        "provider": "provider-A",
+        "subject": "alice-01"
+      },
+      "case": "email_matches_another_user",
+      "expected": "alice",
+      "family": "wrong_account",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Stable identity must not jump to Bob.",
+      "owner": "alice",
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "nobody@example.invalid",
+        "provider": "provider-A",
+        "subject": "unseen"
+      },
+      "case": "unknown_identity",
+      "expected": null,
+      "family": "unknown",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "No email or identity match.",
+      "owner": null,
+      "session_capture": []
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "nobody@example.invalid",
+        "provider": "provider-A",
+        "subject": "unseen"
+      },
+      "case": "unknown_identity",
+      "expected": null,
+      "family": "unknown",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "No email or identity match.",
+      "owner": null,
+      "session_capture": []
+    },
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-A",
+        "subject": ""
+      },
+      "case": "missing_subject",
+      "expected": "alice",
+      "family": "unlinked",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Missing stable identity is not repaired with email.",
+      "owner": null,
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-A",
+        "subject": ""
+      },
+      "case": "missing_subject",
+      "expected": null,
+      "family": "unlinked",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Missing stable identity is not repaired with email.",
+      "owner": null,
+      "session_capture": []
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-C",
+        "subject": "alice-01"
+      },
+      "case": "unknown_provider",
+      "expected": null,
+      "family": "unknown",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Common trusted-provider check refuses unknown namespace.",
+      "owner": null,
+      "session_capture": []
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-C",
+        "subject": "alice-01"
+      },
+      "case": "unknown_provider",
+      "expected": null,
+      "family": "unknown",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Common trusted-provider check refuses unknown namespace.",
+      "owner": null,
+      "session_capture": []
+    },
+    {
+      "actual": "local-user",
+      "assertion": {
+        "email": "local@example.invalid",
+        "provider": "provider-B",
+        "subject": "local-claim"
+      },
+      "case": "local_only_collision",
+      "expected": "local-user",
+      "family": "unlinked",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Local-only user has no federated binding.",
+      "owner": null,
+      "session_capture": [
+        {
+          "user_id": "local-user"
+        }
+      ]
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "local@example.invalid",
+        "provider": "provider-B",
+        "subject": "local-claim"
+      },
+      "case": "local_only_collision",
+      "expected": null,
+      "family": "unlinked",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Local-only user has no federated binding.",
+      "owner": null,
+      "session_capture": []
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "disabled@example.invalid",
+        "provider": "provider-A",
+        "subject": "disabled-01"
+      },
+      "case": "disabled_account",
+      "expected": null,
+      "family": "disabled",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Same active-account check in both modes.",
+      "owner": null,
+      "session_capture": []
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "disabled@example.invalid",
+        "provider": "provider-A",
+        "subject": "disabled-01"
+      },
+      "case": "disabled_account",
+      "expected": null,
+      "family": "disabled",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Same active-account check in both modes.",
+      "owner": null,
+      "session_capture": []
+    },
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-B",
+        "subject": "alice-linked"
+      },
+      "case": "explicit_second_binding",
+      "expected": "alice",
+      "family": "legitimate",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Second identity was explicitly enrolled ahead of time.",
+      "owner": "alice",
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    },
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-B",
+        "subject": "alice-linked"
+      },
+      "case": "explicit_second_binding",
+      "expected": "alice",
+      "family": "legitimate",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Second identity was explicitly enrolled ahead of time.",
+      "owner": "alice",
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    },
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-A",
+        "subject": "ALICE-01"
+      },
+      "case": "subject_case_changed",
+      "expected": "alice",
+      "family": "unlinked",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Opaque subject comparisons are case-sensitive.",
+      "owner": null,
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-A",
+        "subject": "ALICE-01"
+      },
+      "case": "subject_case_changed",
+      "expected": null,
+      "family": "unlinked",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Opaque subject comparisons are case-sensitive.",
+      "owner": null,
+      "session_capture": []
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "",
+        "provider": "provider-A",
+        "subject": "alice-01"
+      },
+      "case": "email_absent",
+      "expected": null,
+      "family": "legitimate_change",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Known binding does not need an email claim for this lookup.",
+      "owner": "alice",
+      "session_capture": []
+    },
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "",
+        "provider": "provider-A",
+        "subject": "alice-01"
+      },
+      "case": "email_absent",
+      "expected": "alice",
+      "family": "legitimate_change",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Known binding does not need an email claim for this lookup.",
+      "owner": "alice",
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    },
+    {
+      "actual": "carol",
+      "assertion": {
+        "email": "carol@example.invalid",
+        "provider": "provider-A",
+        "subject": "O'Reilly"
+      },
+      "case": "apostrophe_subject",
+      "expected": "carol",
+      "family": "legitimate",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Bound parameter preserves an ordinary apostrophe.",
+      "owner": "carol",
+      "session_capture": [
+        {
+          "user_id": "carol"
+        }
+      ]
+    },
+    {
+      "actual": "carol",
+      "assertion": {
+        "email": "carol@example.invalid",
+        "provider": "provider-A",
+        "subject": "O'Reilly"
+      },
+      "case": "apostrophe_subject",
+      "expected": "carol",
+      "family": "legitimate",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Bound parameter preserves an ordinary apostrophe.",
+      "owner": "carol",
+      "session_capture": [
+        {
+          "user_id": "carol"
+        }
+      ]
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-a",
+        "subject": "alice-01"
+      },
+      "case": "provider_case_changed",
+      "expected": null,
+      "family": "unknown",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "Provider namespace is an exact trusted adapter identifier.",
+      "owner": null,
+      "session_capture": []
+    },
+    {
+      "actual": null,
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-a",
+        "subject": "alice-01"
+      },
+      "case": "provider_case_changed",
+      "expected": null,
+      "family": "unknown",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "Provider namespace is an exact trusted adapter identifier.",
+      "owner": null,
+      "session_capture": []
+    },
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-A",
+        "subject": "alice-01"
+      },
+      "case": "forged_exact_binding",
+      "expected": "alice",
+      "family": "assumption_failure",
+      "matches_expected": true,
+      "mode": "email_only",
+      "note": "If the trusted adapter falsely asserts Alice's exact identity, both accept. Authentication validation is outside this model.",
+      "owner": null,
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    },
+    {
+      "actual": "alice",
+      "assertion": {
+        "email": "alice@example.invalid",
+        "provider": "provider-A",
+        "subject": "alice-01"
+      },
+      "case": "forged_exact_binding",
+      "expected": "alice",
+      "family": "assumption_failure",
+      "matches_expected": true,
+      "mode": "bound_identity",
+      "note": "If the trusted adapter falsely asserts Alice's exact identity, both accept. Authentication validation is outside this model.",
+      "owner": null,
+      "session_capture": [
+        {
+          "user_id": "alice"
+        }
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Synthetic SQLite identity lookup; assertions assumed authenticated; no Flowise, model, network, real sessions or credentials."
+}
